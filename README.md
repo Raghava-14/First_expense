@@ -22,6 +22,7 @@ Clone the repository:
    ```sh
    git clone https://github.com/Raghava-14/expense.git
 
+## Installation
 Install NPM packages for both backend and frontend:
 cd backend && npm install
 cd ../frontend && npm install
