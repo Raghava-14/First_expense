@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Category',
     tableName: 'categories', // Ensure lowercase and pluralized
-    timestamps: false // Disabling automatic timestamps
+    timestamps: true // Disabling automatic timestamps
   });
   return Category;
 };

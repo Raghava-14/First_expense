@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'SharedExpense',
     tableName: 'shared_expenses', // Ensure lowercase and pluralized
-    timestamps: false // Disabling automatic timestamps
+    timestamps: true // Disabling automatic timestamps
   });
   return SharedExpense;
 };

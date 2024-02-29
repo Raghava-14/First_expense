@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'GroupInvitation',
     tableName: 'group_invitations',
-    timestamps: false
+    timestamps: true
   });
   return GroupInvitation;
 };

@@ -10,6 +10,7 @@ const groupInvitationsRoutes = require('./routes/groupInvitationsRoutes');
 const groupMembersRoutes = require('./routes/groupMembersRoutes');
 const sharedExpensesRoutes = require('./routes/sharedExpensesRoutes');
 const groupExpensesRoutes = require('./routes/groupExpensesRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 
 
@@ -39,6 +40,9 @@ app.use('/api', sharedExpensesRoutes);
 
 // Use groupExpensesRoutes for requests prefixed with "/api/group-expenses"
 app.use('/api', groupExpensesRoutes);
+
+// Use auth routes
+app.use('/api/auth', authRoutes);
 
 // PSQL
 const pool = require('./dbserver'); // Adjust the path as necessary
