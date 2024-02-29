@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const userRoutes = require('./routes/userRoutes');
-const categoryRoutes = require('./routes/categoryRoutes');
+const usersRoutes = require('./routes/usersRoutes');
+const categoriesRoutes = require('./routes/categoriesRoutes');
 const expensesRoutes = require('./routes/expensesRoutes');
 const groupsRoutes = require('./routes/groupsRoutes');
 const groupInvitationsRoutes = require('./routes/groupInvitationsRoutes');
@@ -17,10 +17,10 @@ const groupExpensesRoutes = require('./routes/groupExpensesRoutes');
 app.use(express.json());
 
 // Use the userRoutes for any requests to "/api/users"
-app.use('/api', userRoutes);
+app.use('/api', usersRoutes);
 
 // Use the categoryRoutes for any requests to "/api/categories"
-app.use('/api', categoryRoutes);
+app.use('/api', categoriesRoutes);
 
 // Use expensesRoutes for requests prefixed with "/api/expenses"
 app.use('/api', expensesRoutes);

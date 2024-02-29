@@ -15,7 +15,7 @@ exports.createGroupExpense = async (req, res) => {
 };
 
 // List all expenses for a specific group
-exports.listGroupExpenses = async (req, res) => {
+exports.getGroupExpenses = async (req, res) => {
   try {
     const { groupId } = req.params;
     const expenses = await GroupExpense.findAll({

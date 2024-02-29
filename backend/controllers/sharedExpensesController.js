@@ -60,3 +60,49 @@ exports.deleteSharedExpense = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
+
+// Get all shared expenses for a specific user
+exports.getSharedExpensesForUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const sharedExpenses = await SharedExpense.findAll({
+      include: [
+        {
+          model: Expense,
+          where: { userId } // Assuming a direct relationship for simplicity
+        },
+        {
+          model: User,
+          as: 'UserDetail',
+          attributes: ['id', 'username', 'email'] // Only include necessary fields
+        }
+      ]
+    });
+    res.status(200).send(sharedExpenses);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+// Get all shared expenses for a specific group
+exports.getSharedExpensesForGroup = async (req, res) => {
+  try {
+    const { groupId } = req.params;
+    // Assuming that expenses are directly associated with groups
+    const sharedExpenses = await SharedExpense.findAll({
+      include: [
+        {
+          model: Expense,
+          where: { groupId } // Filter expenses by groupId
+        },
+        {
+          model: Group,
+          attributes: ['id', 'name'] // Include group details
+        }
+      ]
+    });
+    res.status(200).send(sharedExpenses);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
