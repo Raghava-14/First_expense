@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'GroupMember',
     tableName: 'group_members', // Ensure lowercase and pluralized
-    timestamps: true, // Disabling automatic timestamps
+    timestamps: true, 
     indexes: [
       {
         unique: true,

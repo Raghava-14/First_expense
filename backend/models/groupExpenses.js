@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'GroupExpense',
     tableName: 'group_expenses', // Ensure lowercase and pluralized
-    timestamps: true, // Disabling automatic timestamps
+    timestamps: true, 
   });
   return GroupExpense;
 };

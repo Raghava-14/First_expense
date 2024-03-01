@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Group',
     tableName: 'groups', // Ensure lowercase and pluralized
-    timestamps: true // Disabling automatic timestamps
+    timestamps: true 
   });
   return Group;
 };
