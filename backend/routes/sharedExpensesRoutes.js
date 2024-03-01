@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const sharedExpensesController = require('../controllers/sharedExpensesController');
+const verifyToken = require('../middlewares/authMiddleware');
+
+// Protect all shared expenses routes
+router.use(verifyToken);
 
 // Route to create a new shared expense
 router.post('/shared-expenses', sharedExpensesController.createSharedExpense);
