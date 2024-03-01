@@ -31,7 +31,14 @@ exports.getExpenseById = async (req, res) => {
 // Create a new expense
 exports.createExpense = async (req, res) => {
   try {
-    const newExpense = await Expense.create(req.body);
+    const { name, amount, description, category_id, user_id } = req.body;
+    const newExpense = await Expense.create({ 
+      name, // Include 'name' here
+      amount, 
+      description, 
+      category_id, 
+      user_id 
+    });
     res.status(201).send(newExpense);
   } catch (error) {
     res.status(400).send({ message: error.message });
@@ -41,6 +48,7 @@ exports.createExpense = async (req, res) => {
 // Update an expense
 exports.updateExpense = async (req, res) => {
   try {
+    // Include 'name' in the req.body if it's part of the update payload
     const updatedExpense = await Expense.update(req.body, {
       where: { id: req.params.id },
       returning: true,
@@ -54,6 +62,7 @@ exports.updateExpense = async (req, res) => {
     res.status(400).send({ message: error.message });
   }
 };
+
 
 // Delete an expense
 exports.deleteExpense = async (req, res) => {

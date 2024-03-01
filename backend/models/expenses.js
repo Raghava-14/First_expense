@@ -20,11 +20,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false
     },
+
     description: DataTypes.STRING,
-    time_and_date: {
-      type: DataTypes.DATE,
+
+    name: {
+      type: DataTypes.STRING,
       allowNull: false
-    },
+    },    
+
     category_id: {
       type: DataTypes.INTEGER,
       references: {
@@ -32,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
       }
     },
+    
     user_id: {
       type: DataTypes.INTEGER,
       references: {
@@ -43,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Expense',
     tableName: 'expenses', // Ensure lowercase and pluralized
-    timestamps: true // Disabling automatic timestamps
+    timestamps: true 
   });
   return Expense;
 };
