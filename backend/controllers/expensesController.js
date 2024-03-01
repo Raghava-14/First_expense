@@ -58,15 +58,39 @@ exports.updateExpense = async (req, res) => {
 // Delete an expense
 exports.deleteExpense = async (req, res) => {
   try {
-    const deleted = await Expense.destroy({
-      where: { id: req.params.id },
-    });
-    if (deleted) {
-      res.send({ message: 'Expense deleted' });
+    const id = req.params.id;
+    // The update method returns an array where the first element is the number of affected rows
+    const [affectedRows] = await Expense.update({ isDeleted: true }, { where: { id } });
+    
+    if (affectedRows > 0) {
+      res.send({ message: 'Expense soft-deleted successfully' });
     } else {
+      // If no rows were affected, it means the expense was not found
       res.status(404).send({ message: 'Expense not found' });
+    }
+  } catch (error) {
+    console.error("Error while deleting expense:", error);
+    res.status(500).send({ message: error.message });
+  }
+}
+
+
+//Undelete an expense
+exports.undeleteExpense = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const expense = await Expense.update(
+      { isDeleted: false },
+      { where: { id }, returning: true }
+    );
+    if (expense[0]) {
+      res.send({ message: "Expense restored successfully", expense: expense[1][0] });
+    } else {
+      res.status(404).send({ message: "Expense not found" });
     }
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
 };
+
+

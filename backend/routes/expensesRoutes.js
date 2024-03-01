@@ -17,4 +17,8 @@ router.put('/expenses/:id', expensesController.updateExpense);
 // Route to delete an expense
 router.delete('/expenses/:id', expensesController.deleteExpense);
 
+// Route to Undelete an expense
+router.put('/expenses/:id/undelete', expensesController.undeleteExpense);
+
+
 module.exports = router;
