@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
       }
     },
+    
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -32,7 +33,12 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
       }
     },
-    share_type: DataTypes.STRING,
+
+    share_type: {
+      type: DataTypes.ENUM('equal', 'amount', 'percentage', 'shares'),
+      allowNull: false
+    },
+    
     share_value: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false

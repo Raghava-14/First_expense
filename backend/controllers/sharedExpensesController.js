@@ -3,11 +3,11 @@ const { SharedExpense, Expense, User } = require('../models');
 // Create a new shared expense
 exports.createSharedExpense = async (req, res) => {
   try {
-    const { expense_id, user_id, shareType, share_value } = req.body;
+    const { expense_id, user_id, share_type, share_value } = req.body;
     const sharedExpense = await SharedExpense.create({
       expense_id,
       user_id,
-      shareType,
+      share_type,
       share_value
     });
     res.status(201).send(sharedExpense);
