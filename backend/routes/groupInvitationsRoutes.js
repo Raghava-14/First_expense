@@ -1,15 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const groupInvitationsController = require('../controllers/groupInvitationsController');
+const authMiddleware = require('../middlewares/authMiddleware');
+
+// Apply the authMiddleware to all routes in this router
+router.use(authMiddleware);
 
 // Sending a new invitation
-router.post('/send', groupInvitationsController.sendInvitation);
+router.post('/group-invitations', groupInvitationsController.sendInvitation);
 
 // Accepting an invitation
-router.put('/accept/:invitationId', groupInvitationsController.acceptInvitation);
+router.put('/accept/:invitation_id', groupInvitationsController.acceptInvitation);
 
 // Declining an invitation
-router.put('/decline/:invitationId', groupInvitationsController.declineInvitation);
+router.put('/decline/:invitation_id', groupInvitationsController.declineInvitation);
 
 // Listing all invitations for a user
 router.get('/', groupInvitationsController.listInvitations);

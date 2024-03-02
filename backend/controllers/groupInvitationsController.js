@@ -3,12 +3,12 @@ const { GroupInvitation, User, Group } = require('../models');
 // Send a new invitation to join a group
 exports.sendInvitation = async (req, res) => {
   try {
-    const { groupId, invitedUserId } = req.body;
+    const { group_id, invited_user_id } = req.body;
     const invitation = await GroupInvitation.create({
-      groupId,
-      invitedUserId,
+      group_id,
+      invited_user_id,
       status: 'pending', // Initial status is always 'pending'
-      invitedBy: req.userId // Assuming the userId is available in request, e.g., from a middleware
+      invited_by: req.userId // Assuming the userId is available in request, e.g., from a middleware
     });
     res.status(201).send(invitation);
   } catch (error) {
@@ -19,11 +19,14 @@ exports.sendInvitation = async (req, res) => {
 // Accept an invitation
 exports.acceptInvitation = async (req, res) => {
   try {
-    const { invitationId } = req.params;
+    const { invitation_id } = req.params;
     const updatedInvitation = await GroupInvitation.update(
       { status: 'accepted' },
-      { where: { id: invitationId, invitedUserId: req.userId }, returning: true } // Ensuring that only the invited user can accept
+      { where: { id: invitation_id, invited_user_id: req.userId, status: 'pending' }, returning: true } // Ensuring that only the invited user can accept
     );
+
+    console.log('Updated Invitation:', updatedInvitation);
+
     if (updatedInvitation[0]) {
       res.send(updatedInvitation[1][0]);
     } else {
@@ -37,11 +40,14 @@ exports.acceptInvitation = async (req, res) => {
 // Decline an invitation
 exports.declineInvitation = async (req, res) => {
   try {
-    const { invitationId } = req.params;
+    const { invitation_id } = req.params;
     const updatedInvitation = await GroupInvitation.update(
       { status: 'declined' },
-      { where: { id: invitationId, invitedUserId: req.userId }, returning: true } // Ensuring that only the invited user can decline
+      { where: { id: invitation_id, invited_user_id: req.userId, status: 'pending' }, returning: true } // Ensuring that only the invited user can decline
     );
+
+    console.log('Updated Invitation:', updatedInvitation);
+
     if (updatedInvitation[0]) {
       res.send(updatedInvitation[1][0]);
     } else {
@@ -56,8 +62,8 @@ exports.declineInvitation = async (req, res) => {
 exports.listInvitations = async (req, res) => {
   try {
     const invitations = await GroupInvitation.findAll({
-      where: { invitedUserId: req.userId },
-      include: [{ model: Group }, { model: User, as: 'invitedBy' }] // Including group and who invited the user
+      where: { invited_user_id: req.userId },
+      include: [{ model: Group }, { model: User, as: 'invited_by' }] // Including group and who invited the user
     });
     res.send(invitations);
   } catch (error) {
